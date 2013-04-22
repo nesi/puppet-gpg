@@ -2,6 +2,8 @@
 
 This is a Puppet module for handing GPG keys.
 
+[![Build Status](https://travis-ci.org/nesi/puppet-gpg.png)](https://travis-ci.org/nesi/puppet-gpg)
+
 # Licensing
 
 Update your license details here.
