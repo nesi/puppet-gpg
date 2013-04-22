@@ -7,7 +7,7 @@ describe 'gpg::install', :type => :class do
         :osfamily   => 'Debian'
       }
     end
-    let(:params) { {:package => gnupg} }
+    let(:params) { {:package => 'gnupg'} }
     it { should contain_package("gnupg") }
   end
 
@@ -17,7 +17,7 @@ describe 'gpg::install', :type => :class do
         :osfamily   => 'RedHat'
       }
     end
-    let(:params) { {:package => gnupg} }
+    let(:params) { {:package => 'gnupg'} }
     it { should contain_package("gnupg") }
   end
 end
