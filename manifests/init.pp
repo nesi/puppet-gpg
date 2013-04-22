@@ -33,8 +33,6 @@ class gpg (
 
   # Parameter sanity checks here
 
-  class{'gpg::install':
-    package   => $gpg::params::package
-  }
+  class{'gpg::install': }
 
 }

@@ -8,6 +8,10 @@ This is a Puppet module for handing GPG keys.
 
 Update your license details here.
 
+# References
+
+* https://github.com/crayfishx/puppet-gpg used for creation of GPG keys with gpgme
+
 # Attribution
 
 This module is derived from the puppet-blank module by Aaron Hicks (aethylred@gmail.com)
