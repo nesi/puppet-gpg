@@ -8,6 +8,7 @@ describe 'gpg', :type => :class do
       }
     end
     it { should create_class("gpg::install") }
+    it { should contain_package("gnupg") }
   end
 
   context "on a RedHat OS" do
@@ -17,5 +18,6 @@ describe 'gpg', :type => :class do
       }
     end
     it { should create_class("gpg::install") }
+    it { should contain_package("gnupg") }
   end
 end
