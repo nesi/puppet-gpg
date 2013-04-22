@@ -27,7 +27,14 @@
 #     along with the gpg Puppet module.  If not, see <http://www.gnu.org/licenses/>.
 
 # [Remember: No empty lines between comments and class definition]
-class gpg {
+class gpg (
 
+) inherits gpg::params {
+
+  # Parameter sanity checks here
+
+  class{'gpg::install':
+    package   => $gpg::params::package
+  }
 
 }
