@@ -7,7 +7,7 @@ describe 'gpg', :type => :class do
         :osfamily   => 'Debian'
       }
     end
-    it { should include_class("gpg::install") }
+    it { should create_class("gpg::install") }
   end
 
   context "on a RedHat OS" do
@@ -16,6 +16,6 @@ describe 'gpg', :type => :class do
         :osfamily   => 'RedHat'
       }
     end
-    it { should include_class("gpg::install") }
+    it { should create_class("gpg::install") }
   end
 end
