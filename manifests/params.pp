@@ -1,4 +1,4 @@
-class "gpg::params" {
+class gpg::params {
 
 case $::osfamily {
   'Debian', 'RedHat':{
