@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'gpg', :type => :class do
+describe 'gpg::install', :type => :class do
   context "on a Debian OS" do
     let :facts do
       {
         :osfamily   => 'Debian'
       }
     end
-    it { should include_class("gpg::install") }
+    it { should contain_package("gnupg") }
   end
 
   context "on a RedHat OS" do
@@ -16,6 +16,6 @@ describe 'gpg', :type => :class do
         :osfamily   => 'RedHat'
       }
     end
-    it { should include_class("gpg::install") }
+    it { should contain_package("gnupg") }
   end
 end
