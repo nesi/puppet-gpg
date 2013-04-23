@@ -12,9 +12,13 @@ define gpg::keymaster::setup(
   $email,
   $password,
   $armour,
-  $expiry
+  $expiry,
+  $maxdays,
+  $mindate,
+  $warn_expiry
 ){
   include gpg::params
+
   Exec{ path => ['/usr/bin','/usr/sbin','/bin','/sbin']}
 
   File{
@@ -23,11 +27,38 @@ define gpg::keymaster::setup(
     mode    => 600,
   }
 
-  $key_gen_file    = "${gpg::params::keymaster_ring_dir}/${title}/gpg_gen.txt"
-  $secret_key_file = "${gpg::params::keymaster_ring_dir}/${title}/${title}_secret.gpg"
-  $public_key_file = "${gpg::params::keymaster_ring_dir}/${title}/${title}_public.gpg"
+  $key_dir      = "${gpg::params::ring_dir}/${title}"
+  $keygen_file  = "${key_dir}/keygen.txt"
+  $secret_file  = "${key_dir}/${title}_secret.gpg"
+  $public_file  = "${key_dir}/${title}_public.gpg"
 
-  case $ensure {
+  if $ensure = 'present' {
+    # Remove existing key pair, if;
+    # $force is true, or
+    # $maxdays or $mindate criteria isn't met (if set)
+
+    if $force {
+      $reason = 'force is true'
+    }
+
+    if !$reason and $mindate and generate("/usr/bin/find", $secret_file, "!", "-newermt", "${mindate}") {
+        $reason = "created before ${mindate}"
+    }
+
+    if !$reason and $maxdays and generate("/usr/bin/find", $secret_file, "-mtime", "+${maxdays}") {
+      $reason = "older than ${maxdays} days"
+    }
+
+    if $reason {
+      Exec{"Revoke previous GPG key ${title}: ${reason}":
+        command => "rm ${secret_file} ${public_file} ${keygen_file}",
+        before  => Exec["Create GPG keygen file for ${title}","Create GPG key pair for ${title}"]
+      }
+    }
+
+    # Create the GPG key gen file for using gpg in batch mode
+
+    # Create the GPG key pair
 
   }
 }
