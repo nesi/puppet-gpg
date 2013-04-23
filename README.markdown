@@ -11,7 +11,10 @@ To install the GPG tools:
 include gpg
 ```
 
-This should be run before using the GPG type.
+This should be run before using the GPG type or setting up the keymaster.
+
+# GPG Keymaster
+
 
 # Type and Provider for GPG
 
@@ -49,7 +52,10 @@ Update your license details here.
 
 # References
 
+* http://www.gnupg.org/ GunPG home page
 * https://github.com/crayfishx/puppet-gpg used for creation of GPG keys with gpgme
+* http://www.happylife.sg/index.php/2011/01/24/migrating-gpg-keys/ for migrating GPG keys around
+* https://github.com/boklm/puppet-sshkeys for an example of using puppet to manage keys
 
 # Attribution
 
