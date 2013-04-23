@@ -7,6 +7,7 @@ describe 'gpg::install', :type => :class do
         :osfamily   => 'Debian'
       }
     end
+    it { should include_class("gpg::params")}
     it { should contain_package("gnupg") }
     it { should contain_package("gpgme") }
   end
@@ -17,6 +18,7 @@ describe 'gpg::install', :type => :class do
         :osfamily   => 'RedHat'
       }
     end
+    it { should include_class("gpg::params")}
     it { should contain_package("gnupg") }
     it { should contain_package("gpgme") }
   end
