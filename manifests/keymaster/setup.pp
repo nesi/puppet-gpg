@@ -31,11 +31,18 @@ define gpg::keymaster::setup(
   $secret_file  = "${key_dir}/${title}_secret.gpg"
   $public_file  = "${key_dir}/${title}_public.gpg"
 
-  $secret_content = file($secret_file,'/dev/null')
-  if $secret_content {
-    if $ensure == 'present' {
-      # Remove existing key pair, if;
-      # $force is true
+  file { $key_dir:
+    ensure  => directory,
+    mode    => 644;
+  }
+
+  if $ensure == 'present' {
+    # Remove existing key pair, if;
+    # $force is true
+
+    $secret_content = file($secret_file,'/dev/null')
+    if $secret_content {
+
 
       if $force {
         $reason = 'force is true'
@@ -47,18 +54,18 @@ define gpg::keymaster::setup(
           before  => Exec["Create GPG keygen file for ${title}","Create GPG key pair for ${title}"]
         }
       }
-
-      # Putting some of the key parameters in the comment
-      $comment = "${keytype} ${keylength} ${subkeytype} ${subkeylength}"
-
-      # Create the GPG key gen file for using gpg in batch mode
-      $keygen_content = template('gpg/keygen.txt.erb')
-      generate('echo',"'${keygen_content}'",'>',$keygen_file)
-
-      # Create the GPG key pair
-
     }
+  }
   # Check certificate expiry
 
+  # Putting some of the key parameters in the comment
+  $comment = "${keytype} ${keylength} ${subkeytype} ${subkeylength}"
+
+  # Create the GPG key gen file for using gpg in batch mode
+  file{$keygen_file:
+    ensure  => $ensure,
+    content => template('gpg/keygen.txt.erb')
   }
+
+  # Create the GPG key pair
 }
