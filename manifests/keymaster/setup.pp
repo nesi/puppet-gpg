@@ -42,7 +42,7 @@ define gpg::keymaster::setup(
       }
 
       if $reason {
-        Exec{"Revoke previous GPG key ${title}: ${reason}":
+        exec{"Revoke previous GPG key ${title}: ${reason}":
           command => "rm ${secret_file} ${public_file} ${keygen_file}",
           before  => Exec["Create GPG keygen file for ${title}","Create GPG key pair for ${title}"]
         }
