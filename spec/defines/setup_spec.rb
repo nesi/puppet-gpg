@@ -7,7 +7,7 @@ describe 'gpg::keymaster::setup', :type => :define do
         :osfamily   => 'Debian'
       }
     end
-    let(:params) {{:title => 'test'}}
+    let(:title) { 'test' }
     it { should include_class("gpg::params")}
     it { should contain_file("/var/lib/puppet-keymaster/gpg/test")}
     it { should contain_file("/var/lib/puppet-keymaster/gpg/test/keygen.txt")}
@@ -18,7 +18,7 @@ describe 'gpg::keymaster::setup', :type => :define do
         :osfamily   => 'RedHat'
       }
     end
-    let(:params) {{:title => 'test'}}
+    let(:title) { 'test' }
     it { should include_class("gpg::params")}
     it { should contain_file("/var/lib/puppet-keymaster/gpg/test")}
     it { should contain_file("/var/lib/puppet-keymaster/gpg/test/keygen.txt")}
