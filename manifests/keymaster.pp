@@ -5,7 +5,7 @@ class gpg::keymaster {
 
   require gpg
 
-  file{$gpg::params::keymaster_ring_dir:
+  file{$gpg::params::ring_dir:
     ensure  => directory,
     owner   => puppet,
     group   => puppet,
@@ -13,7 +13,7 @@ class gpg::keymaster {
     recurse => true
   }
 
-  file{$gpg::params::keymaster_keyring:
+  file{$gpg::params::ring_file:
     ensure  => file,
     owner   => puppet,
     group   => puppet,

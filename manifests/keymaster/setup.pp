@@ -48,10 +48,12 @@ define gpg::keymaster::setup(
         }
       }
 
-      $comment = "$keytype $keylength $subkeytype $subkeylength"
+      # Putting some of the key parameters in the comment
+      $comment = "${keytype} ${keylength} ${subkeytype} ${subkeylength}"
 
       # Create the GPG key gen file for using gpg in batch mode
       $keygen_content = template('gpg/keygen.txt.erb')
+      generate('echo',"'${keygen_content}'",'>',$keygen_file)
 
       # Create the GPG key pair
 
