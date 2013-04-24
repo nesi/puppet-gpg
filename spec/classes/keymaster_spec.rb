@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'gpg', :type => :class do
+describe 'gpg::keymaster', :type => :class do
   context "on a Debian OS" do
     let :facts do
       {
