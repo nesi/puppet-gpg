@@ -33,7 +33,7 @@ define gpg::keymaster::setup(
 
   $secret_content = file($secret_file,'/dev/null')
   if $secret_content {
-    if $ensure = 'present' {
+    if $ensure == 'present' {
       # Remove existing key pair, if;
       # $force is true
 
