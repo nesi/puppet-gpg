@@ -1,17 +1,16 @@
 define gpg::key (
   $ensure       = 'present',
   $force        = false,
-  $keytype      = 'rsa',
-  $keylength    = 4096,
+  $keytype      = 'default',
+  $keylength    = undef,
   $expiry       = 0,
-  $maxdays      = undef,
-  $mindate      = undef,
   $warn_expiry  = 21,
-  $subkeytype   = 'rsa',
-  $subkeylength = '4096',
+  $subkeytype   = 'default',
+  $subkeylength = undef,
   $email        = 'puppet@localhost',
+  $realname     = 'not given',
   $password     = '',
-  $armour       = true,
+  $armour       = true
 ){
 
   include gpg::params
@@ -36,11 +35,10 @@ define gpg::key (
     subkeytype    => $subkeytype,
     subkeylength  => $subkeylength,
     email         => $email,
+    realname      => $realname,
     password      => $password,
     armour        => $armour,
     expiry        => $expiry,
-    mindate       => $mindate,
-    maxdays       => $maxdays,
     warn_expiry   => $warn_expiry
   }
 

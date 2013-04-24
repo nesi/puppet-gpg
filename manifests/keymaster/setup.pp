@@ -10,11 +10,10 @@ define gpg::keymaster::setup(
   $subkeytype,
   $subkeylength,
   $email,
+  $realname,
   $password,
   $armour,
   $expiry,
-  $maxdays,
-  $mindate,
   $warn_expiry
 ){
   include gpg::params
@@ -32,33 +31,32 @@ define gpg::keymaster::setup(
   $secret_file  = "${key_dir}/${title}_secret.gpg"
   $public_file  = "${key_dir}/${title}_public.gpg"
 
-  if $ensure = 'present' {
-    # Remove existing key pair, if;
-    # $force is true, or
-    # $maxdays or $mindate criteria isn't met (if set)
+  $secret_content = file($secret_file,'/dev/null')
+  if $secret_content {
+    if $ensure = 'present' {
+      # Remove existing key pair, if;
+      # $force is true
 
-    if $force {
-      $reason = 'force is true'
-    }
-
-    if !$reason and $mindate and generate("/usr/bin/find", $secret_file, "!", "-newermt", "${mindate}") {
-        $reason = "created before ${mindate}"
-    }
-
-    if !$reason and $maxdays and generate("/usr/bin/find", $secret_file, "-mtime", "+${maxdays}") {
-      $reason = "older than ${maxdays} days"
-    }
-
-    if $reason {
-      Exec{"Revoke previous GPG key ${title}: ${reason}":
-        command => "rm ${secret_file} ${public_file} ${keygen_file}",
-        before  => Exec["Create GPG keygen file for ${title}","Create GPG key pair for ${title}"]
+      if $force {
+        $reason = 'force is true'
       }
+
+      if $reason {
+        Exec{"Revoke previous GPG key ${title}: ${reason}":
+          command => "rm ${secret_file} ${public_file} ${keygen_file}",
+          before  => Exec["Create GPG keygen file for ${title}","Create GPG key pair for ${title}"]
+        }
+      }
+
+      $comment = "$keytype $keylength $subkeytype $subkeylength"
+
+      # Create the GPG key gen file for using gpg in batch mode
+      $keygen_content = template('gpg/keygen.txt.erb')
+
+      # Create the GPG key pair
+
     }
-
-    # Create the GPG key gen file for using gpg in batch mode
-
-    # Create the GPG key pair
+  # Check certificate expiry
 
   }
 }
