@@ -1,3 +1,4 @@
+#Parameter values for gpg module
 class gpg::params {
 
   #Default values
