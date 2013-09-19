@@ -9,7 +9,7 @@ class gpg::install {
   package { $gpg::params::gpgme_package:
     ensure    => 'installed',
     provider  => $gpg::params::gpgme_provider,
-    require   => Package[$gpg::params::gpgme_package]
+    require   => Package[$gpg::params::package]
   }
 
 }
